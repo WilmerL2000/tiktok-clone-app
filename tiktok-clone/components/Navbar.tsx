@@ -2,14 +2,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { FiLogOut } from 'react-icons/fi';
 import { BiSearch } from 'react-icons/bi';
 import { IoMdAdd } from 'react-icons/io';
-import { CgProfile } from 'react-icons/cg';
+import { IoIosArrowDown } from 'react-icons/io';
 import Logo from '@/utils/tiktik-logo.png';
-import { GoogleLogin, googleLogout } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import { createOrGetUser } from '@/utils';
 import useAuthStore from '@/store/authStore';
+import DropdownMenu from './DropdownMenu';
 
 type NavbarProps = {};
 
@@ -50,47 +50,27 @@ const Navbar: React.FC<NavbarProps> = () => {
             </Link>
             {userProfile?.image && (
               <div className="relative">
-                <Image
-                  width={40}
-                  height={40}
-                  alt="Profile photo"
-                  className="rounded-full cursor-pointer"
-                  src={userProfile?.image}
+                <div
+                  className="flex gap-1 items-center cursor-pointer"
                   onClick={() => setIsOpen((prev) => !prev)}
-                />
+                >
+                  <Image
+                    width={40}
+                    height={40}
+                    alt="Profile photo"
+                    className="rounded-full "
+                    src={userProfile?.image}
+                  />
+                  <IoIosArrowDown color="gray" fontSize={20} />
+                </div>
+
                 {isOpen && (
-                  <div className="z-20 absolute w-40 mt-2 right-0 rounded-md bg-gray-400 divide-y">
-                    <div className=" px-2 py-3">
-                      <span className="block text-sm text-gray-900 dark:text-white">
-                        {userProfile.userName}
-                      </span>
-                    </div>
-                    <ul className="py-2 ">
-                      <li>
-                        <Link
-                          href="#"
-                          className="flex gap-2 px-4 py-2 text-sm text-grLinky-700 hover:bg-grLinky-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                        >
-                          <CgProfile color="white" fontSize={21} />
-                          Profile
-                        </Link>
-                      </li>
-                      <li>
-                        <button
-                          type="button"
-                          className="flex gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                          onClick={() => {
-                            googleLogout();
-                            removeUser();
-                            setUserExist((prev) => !prev);
-                          }}
-                        >
-                          <FiLogOut color="red" fontSize={21} />
-                          Sign out
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
+                  <DropdownMenu
+                    userName={userProfile?.userName}
+                    removeUser={removeUser}
+                    setIsOpen={setIsOpen}
+                    setUserExist={setUserExist}
+                  />
                 )}
               </div>
             )}
