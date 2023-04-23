@@ -33,6 +33,15 @@ const Detail = ({ postDetails }: Props) => {
     if (userProfile) setUserExist(true);
   }, [userProfile]);
 
+  /* Is setting the `muted` property of the `videoRef` element to the value of
+`isVideoMuted` when either `post` or `isVideoMuted` changes. This allows the user to mute or unmute
+the video by clicking on the volume button. */
+  useEffect(() => {
+    if (post && videoRef?.current) {
+      videoRef.current.muted = isVideoMuted;
+    }
+  }, [post, isVideoMuted]);
+
   const onVideoClick = () => {
     if (isPlaying) {
       videoRef?.current?.pause();
@@ -43,11 +52,36 @@ const Detail = ({ postDetails }: Props) => {
     }
   };
 
-  useEffect(() => {
-    if (post && videoRef?.current) {
-      videoRef.current.muted = isVideoMuted;
+  /**
+   * This function handles liking a post by sending a PUT request to the server and updating the post's
+   * likes count.
+   * @param {boolean} like - a boolean value indicating whether the user has liked or unliked the post.
+   */
+  const handleLike = async (like: boolean) => {
+    if (userProfile) {
+      const { data } = await axios.put(`${BASE_URL}/api/like`, {
+        userId: userProfile._id,
+        postId: post._id,
+        like,
+      });
+      setPost((prev) => ({ ...prev, likes: data.likes }));
     }
-  }, [post, isVideoMuted]);
+  };
+
+  const addComment = async (e) => {
+    e.preventDefault();
+    if (userProfile && comment) {
+      setIsPostingComment((prev) => !prev);
+      const { data } = await axios.put(`${BASE_URL}/api/post/${post._id}`, {
+        userId: userProfile._id,
+        comment,
+      });
+
+      setPost((prev) => ({ ...prev, comments: data.comments }));
+      setComment('');
+      setIsPostingComment((prev) => !prev);
+    }
+  };
 
   if (!post) return null;
 
@@ -128,23 +162,29 @@ const Detail = ({ postDetails }: Props) => {
               <div className="px-10">
                 <p className=" text-md text-gray-600">{post.caption}</p>
               </div>
-              <div className="mt-10 px-10">
-                {userExist && (
-                  <LikeButton
-                  // likes={post.likes}
-                  // flex='flex'
-                  // handleLike={() => handleLike(true)}
-                  // handleDislike={() => handleLike(false)}
-                  />
-                )}
-              </div>
-              <Comments
-              // comment={comment}
-              // setComment={setComment}
-              // addComment={addComment}
-              // comments={post.comments}
-              // isPostingComment={isPostingComment}
-              />
+              {userExist && (
+                <>
+                  <div className="mt-10 px-10">
+                    <div>
+                      <LikeButton
+                        likes={post.likes}
+                        // flex='flex'
+                        handleLike={() => handleLike(true)}
+                        handleDislike={() => handleLike(false)}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <Comments
+                      comment={comment}
+                      setComment={setComment}
+                      addComment={addComment}
+                      comments={post.comments}
+                      isPostingComment={isPostingComment}
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>

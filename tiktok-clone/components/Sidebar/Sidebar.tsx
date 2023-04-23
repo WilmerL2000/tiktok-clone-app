@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { AiFillHome, AiOutlineMenu } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
-import { Discover, Footer, SuggestedAccounts } from './';
+import { Discover, Footer, SuggestedAccounts } from '..';
 
 const Sidebar: React.FC = () => {
   const [showSidebar, setShowSidebar] = useState<Boolean>(true);

@@ -1,6 +1,8 @@
+import { BASE_URL } from '@/utils'
 import axios from 'axios'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+
 
 /**
  * This is a TypeScript function that creates an authentication store with a method to add a user

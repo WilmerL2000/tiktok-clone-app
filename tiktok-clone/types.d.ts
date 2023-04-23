@@ -35,3 +35,10 @@ export interface IUser {
     userName: string;
     image: string;
 }
+
+interface IComment {
+    comment: string;
+    length?: number;
+    _key: string;
+    postedBy: { _ref?: string; _id?: string };
+}

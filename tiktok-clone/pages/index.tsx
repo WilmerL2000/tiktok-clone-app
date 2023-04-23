@@ -23,7 +23,7 @@ export default function Home({ videos }: HomeProps) {
             <VideoCard post={video} key={video._id} />
           ))
         ) : (
-          <NoResults text={`No Videos`} />
+          <NoResults text={`No Videos`} type="videos" />
         )}
       </div>
     </>
