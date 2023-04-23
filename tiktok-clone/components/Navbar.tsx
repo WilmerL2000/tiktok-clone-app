@@ -22,7 +22,6 @@ const Navbar: React.FC<NavbarProps> = () => {
     if (userProfile) setUserExist(true);
   }, [userProfile, userExist]);
 
-  const user = false;
   return (
     <nav className="w-full flex justify-between  items-center border-b-2 border-gray-200 py-2 px-2 md:px-8 ">
       <Link href="/">

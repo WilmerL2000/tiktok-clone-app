@@ -7,6 +7,7 @@ import { FaCloudUploadAlt } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { SanityAssetDocument } from '@sanity/client';
 import { topics } from '@/utils/constants';
+import { BASE_URL } from '@/utils';
 
 const Upload = () => {
   const [caption, setCaption] = useState('');
@@ -20,6 +21,10 @@ const Upload = () => {
   const userProfile: any = useAuthStore((state) => state.userProfile);
   const router = useRouter();
 
+  /* It is checking if the `userProfile` state variable is falsy and if so, it redirects the
+user to the home page (`'/'`) using the `router.push` method. The second argument to `useEffect` is
+an array of dependencies, which determines when the effect should be re-run. In this case, the
+effect should be re-run whenever either `userProfile` or `router` changes. */
   useEffect(() => {
     if (!userProfile) router.push('/');
   }, [userProfile, router]);
@@ -50,11 +55,14 @@ const Upload = () => {
     }
   };
 
+  /**
+   * This function creates a document object representing a post and saves it to a database using
+   * axios.post.
+   */
   const handlePost = async () => {
     if (caption && videoAsset?._id && topic) {
       setSavingPost(true);
 
-      /* Creating a document object that represents a post to be saved in a database. */
       const doc = {
         _type: 'post',
         caption,
@@ -73,11 +81,14 @@ const Upload = () => {
         topic,
       };
 
-      await axios.post(`http://localhost:3000/api/post`, doc);
+      await axios.post(`${BASE_URL}/api/post`, doc);
       router.push('/');
     }
   };
 
+  /**
+   * The function `handleDiscard` resets various state variables.
+   */
   const handleDiscard = () => {
     setSavingPost(false);
     setVideoAsset(undefined);
