@@ -17,7 +17,7 @@ export default function Home({ videos }: HomeProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex flex-col gap-10 videos h-full">
+      <div className="flex flex-col gap-10 h-full">
         {videos?.length ? (
           videos?.map((video: Video) => (
             <VideoCard post={video} key={video._id} />
@@ -30,11 +30,20 @@ export default function Home({ videos }: HomeProps) {
   );
 }
 
-export const getServerSideProps = async () => {
-  const { data } = await axios.get(`${BASE_URL}/api/post`);
+export const getServerSideProps = async ({
+  query: { topic },
+}: {
+  query: { topic: string };
+}) => {
+  let resp = null;
+  if (topic) {
+    resp = await axios.get(`${BASE_URL}/api/discover/${topic}`);
+  } else {
+    resp = await axios.get(`${BASE_URL}/api/post`);
+  }
   return {
     props: {
-      videos: data,
+      videos: resp.data,
     },
   };
 };

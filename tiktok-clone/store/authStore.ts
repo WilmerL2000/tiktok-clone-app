@@ -13,8 +13,13 @@ import { persist } from 'zustand/middleware'
  */
 const authStore = (set: any) => ({
     userProfile: null,
+    allUsers: [],
     addUser: (user: any) => set({ userProfile: user }),
-    removeUser: () => set({ userProfile: null })
+    removeUser: () => set({ userProfile: null }),
+    fetchAllUsers: async () => {
+        const { data } = await axios.get(`${BASE_URL}/api/users`)
+        set({ allUsers: data })
+    }
 })
 
 /* This code creates a persistent store for user authentication using the `zustand` library. The

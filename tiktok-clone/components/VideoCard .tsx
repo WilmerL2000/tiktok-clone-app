@@ -8,6 +8,7 @@ import { GoVerified } from 'react-icons/go';
 import { BsPlay } from 'react-icons/bs';
 
 import { Video } from '@/types';
+import UserBanner from './User/UserBanner';
 
 type VideoCardProps = {
   post: Video;
@@ -47,35 +48,12 @@ const VideoCard: React.FC<VideoCardProps> = ({
 
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
-      <div>
-        <div className="flex gap-3 p-2 cursor-pointer font-semibold rounded items-center">
-          <div className="md:w-16 md:h-16 w-10 h-10">
-            <Link href="/">
-              <>
-                <Image
-                  width={62}
-                  height={62}
-                  alt="Profile photo"
-                  className="rounded-full"
-                  src={postedBy.image}
-                />
-              </>
-            </Link>
-          </div>
-          <div>
-            <Link href="/">
-              <div className="flex items-center gap-2">
-                <p className="flex gap-2 items-center md:text-md font-bold text-primary">
-                  {postedBy.userName}{' '}
-                  <GoVerified className="text-blue-400 text-md" />
-                </p>
-                <p className="capitalize font-medium text-xs text-gray-500 hidden md:block">
-                  {postedBy.userName}
-                </p>
-              </div>
-            </Link>
-          </div>
-        </div>
+      <div className="flex items-start">
+        <UserBanner
+          userId={postedBy._id}
+          image={postedBy.image}
+          userName={postedBy.userName}
+        />
       </div>
       <div className="lg:ml-20 flex gap-4 relative">
         <div
@@ -88,7 +66,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
               loop
               ref={videoRef}
               src={video.asset.url}
-              className="lg:w-[600px] h-[300px] md:h-[400px] lg:h-[530px] w-[200px] rounded-2xl cursor-pointer bg-gray-100"
+              className="md:w-[600px] h-[300px] md:h-[400px] lg:h-[530px] w-[200px] rounded-2xl cursor-pointer bg-gray-100"
             ></video>
           </Link>
           {isHover && (

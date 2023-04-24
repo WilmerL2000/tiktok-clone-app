@@ -9,6 +9,7 @@ type DropdownMenuProps = {
   removeUser: any;
   setUserExist: any;
   setIsOpen: any;
+  userId: number;
 };
 
 const DropdownMenu: React.FC<DropdownMenuProps> = ({
@@ -16,6 +17,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   removeUser,
   setUserExist,
   setIsOpen,
+  userId,
 }) => {
   return (
     <div className="z-20 absolute w-40 mt-2 right-0 rounded-md bg-gray-500 divide-y">
@@ -27,7 +29,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
       <ul className="py-2 ">
         <li>
           <Link
-            href="#"
+            href={`/profile/${userId}`}
             className="flex gap-2 px-4 py-2 text-sm text-grLinky-700 hover:bg-grLinky-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
           >
             <CgProfile color="white" fontSize={21} />

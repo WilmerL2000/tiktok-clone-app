@@ -11,7 +11,7 @@ import axios from 'axios';
 import { Video } from '@/types';
 import { BASE_URL } from '@/utils';
 import useAuthStore from '@/store/authStore';
-import { Comments, LikeButton } from '@/components';
+import { Comments, LikeButton, UserBanner } from '@/components';
 
 type Props = {
   postDetails: Video;
@@ -68,6 +68,11 @@ the video by clicking on the volume button. */
     }
   };
 
+  /**
+   * This function adds a comment to a post and updates the post's comments list.
+   * @param e - The event object, which is passed as an argument to the function when the event (in this
+   * case, a form submission) occurs.
+   */
   const addComment = async (e) => {
     e.preventDefault();
     if (userProfile && comment) {
@@ -131,34 +136,11 @@ the video by clicking on the volume button. */
           </div>
           <div className="relative w-[1000px] md:w-[900px] lg:w-[700px]">
             <div className="lg:mt-20 mt-10">
-              <div className="flex gap-1 p-2 cursor-pointer font-semibold rounded ">
-                <div className="ml-4 md:w-20 md:h-20 w-16 h-16">
-                  <Link href="/">
-                    <>
-                      <Image
-                        width={62}
-                        height={62}
-                        alt="Profile photo"
-                        className="rounded-full"
-                        src={post.postedBy.image}
-                      />
-                    </>
-                  </Link>
-                </div>
-                <div>
-                  <Link href="/">
-                    <div className="mt-2 flex flex-col gap-2">
-                      <p className="flex gap-2 items-center md:text-md font-bold text-primary">
-                        {post.postedBy.userName}{' '}
-                        <GoVerified className="text-blue-400 text-md" />
-                      </p>
-                      <p className="capitalize font-medium text-xs text-gray-500 hidden md:block">
-                        {post.postedBy.userName}
-                      </p>
-                    </div>
-                  </Link>
-                </div>
-              </div>
+              <UserBanner
+                userId={post.postedBy._id}
+                image={post.postedBy.image}
+                userName={post.postedBy.userName}
+              />
               <div className="px-10">
                 <p className=" text-md text-gray-600">{post.caption}</p>
               </div>
@@ -174,17 +156,15 @@ the video by clicking on the volume button. */
                       />
                     </div>
                   </div>
-                  <div>
-                    <Comments
-                      comment={comment}
-                      setComment={setComment}
-                      addComment={addComment}
-                      comments={post.comments}
-                      isPostingComment={isPostingComment}
-                    />
-                  </div>
                 </>
               )}
+              <Comments
+                comment={comment}
+                setComment={setComment}
+                addComment={addComment}
+                comments={post.comments}
+                isPostingComment={isPostingComment}
+              />
             </div>
           </div>
         </div>
