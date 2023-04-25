@@ -8,7 +8,6 @@ export default async function handler(
 ) {
     if (req.method === 'POST') {
         const user = req.body;
-
         /* Creates a new user in a database if the user does not already exist.*/
         client.createIfNotExists(user).then(() => res.status(200).json('Login success'));
 
