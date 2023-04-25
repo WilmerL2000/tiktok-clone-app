@@ -8,6 +8,7 @@ import { MdDelete } from 'react-icons/md';
 import { SanityAssetDocument } from '@sanity/client';
 import { topics } from '@/utils/constants';
 import { BASE_URL } from '@/utils';
+import { toast } from 'react-toastify';
 
 const Upload = () => {
   const [caption, setCaption] = useState('');
@@ -21,10 +22,6 @@ const Upload = () => {
   const userProfile: any = useAuthStore((state) => state.userProfile);
   const router = useRouter();
 
-  /* It is checking if the `userProfile` state variable is falsy and if so, it redirects the
-user to the home page (`'/'`) using the `router.push` method. The second argument to `useEffect` is
-an array of dependencies, which determines when the effect should be re-run. In this case, the
-effect should be re-run whenever either `userProfile` or `router` changes. */
   useEffect(() => {
     if (!userProfile) router.push('/');
   }, [userProfile, router]);
@@ -81,7 +78,8 @@ effect should be re-run whenever either `userProfile` or `router` changes. */
         topic,
       };
 
-      await axios.post(`${BASE_URL}/api/post`, doc);
+      const { data }: any = await axios.post(`${BASE_URL}/api/post`, doc);
+      toast.success(data);
       router.push('/');
     }
   };
@@ -108,7 +106,7 @@ effect should be re-run whenever either `userProfile` or `router` changes. */
           </div>
           <div
             className="border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center 
-          items-center outline-none mt-10 w-[260px] h-[460px] p-10 cursor-pointer hover:border-red-300 
+          items-center outline-none mt-10 w-[300px] h-[460px] p-10 cursor-pointer hover:border-red-300 
           hover:bg-gray-100"
           >
             {isLoading ? (

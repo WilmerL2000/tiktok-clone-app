@@ -1,7 +1,7 @@
-import React from 'react';
+import { topics } from '@/utils/constants';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { topics } from '@/utils/constants';
+import React from 'react';
 
 const Discover: React.FC = () => {
   const router = useRouter();

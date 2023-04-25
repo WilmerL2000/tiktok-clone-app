@@ -3,6 +3,7 @@ import { IUser, Video } from '@/types';
 import { BASE_URL } from '@/utils';
 import axios from 'axios';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { GoVerified } from 'react-icons/go';
 
@@ -19,7 +20,6 @@ const Profile: React.FC<ProfileProps> = ({
 }) => {
   const [showUserVideos, setShowUserVideos] = useState<Boolean>(true);
   const [videosList, setVideosList] = useState<Video[]>([]);
-
   const videos = showUserVideos ? 'border-b-2 border-black' : 'text-gray-400';
   const liked = !showUserVideos ? 'border-b-2 border-black' : 'text-gray-400';
 
@@ -72,7 +72,7 @@ const Profile: React.FC<ProfileProps> = ({
             Liked
           </p>
         </div>
-        <div className="flex gap-6 flex-wrap md:justify-start">
+        <div className="grid md:grid-cols-2 gap-6  md:justify-center">
           {videosList.length > 0 ? (
             videosList.map((post: Video, idx: number) => (
               <VideoCard key={idx} post={post} />

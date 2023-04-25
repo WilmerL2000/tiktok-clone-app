@@ -1,17 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { GoVerified } from 'react-icons/go';
-import Image from 'next/image';
-import Link from 'next/link';
-import { MdOutlineCancel } from 'react-icons/md';
+import { useEffect, useRef, useState } from 'react';
 import { BsFillPlayFill } from 'react-icons/bs';
-import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
-
-import axios from 'axios';
+import { HiVolumeOff, HiVolumeUp } from 'react-icons/hi';
+import { MdOutlineCancel } from 'react-icons/md';
+import { Comments, LikeButton, UserBanner } from '@/components';
+import { useVideo } from '@/hooks/useVideo';
+import useAuthStore from '@/store/authStore';
 import { Video } from '@/types';
 import { BASE_URL } from '@/utils';
-import useAuthStore from '@/store/authStore';
-import { Comments, LikeButton, UserBanner } from '@/components';
+import axios from 'axios';
 
 type Props = {
   postDetails: Video;
@@ -19,7 +16,6 @@ type Props = {
 
 const Detail = ({ postDetails }: Props) => {
   const [post, setPost] = useState(postDetails[0]);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isVideoMuted, setIsVideoMuted] = useState<boolean>(false);
   const [isPostingComment, setIsPostingComment] = useState<boolean>(false);
   const [comment, setComment] = useState<string>('');
@@ -28,6 +24,8 @@ const Detail = ({ postDetails }: Props) => {
   const router = useRouter();
 
   const { userProfile }: any = useAuthStore();
+
+  const { onVideoPress, isPlaying } = useVideo(videoRef);
 
   useEffect(() => {
     if (userProfile) setUserExist(true);
@@ -41,16 +39,6 @@ the video by clicking on the volume button. */
       videoRef.current.muted = isVideoMuted;
     }
   }, [post, isVideoMuted]);
-
-  const onVideoClick = () => {
-    if (isPlaying) {
-      videoRef?.current?.pause();
-      setIsPlaying(false);
-    } else {
-      videoRef?.current?.play();
-      setIsPlaying(true);
-    }
-  };
 
   /**
    * This function handles liking a post by sending a PUT request to the server and updating the post's
@@ -107,7 +95,7 @@ the video by clicking on the volume button. */
               <div className="lg:h-[100vh] h-[60vh]">
                 <video
                   ref={videoRef}
-                  onClick={onVideoClick}
+                  onClick={onVideoPress}
                   loop
                   src={post?.video?.asset.url}
                   className=" h-full cursor-pointer"
@@ -116,7 +104,7 @@ the video by clicking on the volume button. */
 
               <div className="absolute top-[45%] left-[40%]  cursor-pointer">
                 {!isPlaying && (
-                  <button onClick={onVideoClick}>
+                  <button onClick={onVideoPress}>
                     <BsFillPlayFill className="text-white text-6xl lg:text-8xl" />
                   </button>
                 )}
@@ -134,8 +122,8 @@ the video by clicking on the volume button. */
               )}
             </div>
           </div>
-          <div className="relative w-[1000px] md:w-[900px] lg:w-[700px]">
-            <div className="lg:mt-20 mt-10">
+          <div className="relative w-[1000px] md:w-[900px] lg:w-[700px] flex flex-col">
+            <div className="lg:mt-20 mt-10 h-full">
               <UserBanner
                 userId={post.postedBy._id}
                 image={post.postedBy.image}
@@ -150,21 +138,20 @@ the video by clicking on the volume button. */
                     <div>
                       <LikeButton
                         likes={post.likes}
-                        // flex='flex'
                         handleLike={() => handleLike(true)}
                         handleDislike={() => handleLike(false)}
                       />
                     </div>
                   </div>
+                  <Comments
+                    comment={comment}
+                    setComment={setComment}
+                    addComment={addComment}
+                    comments={post.comments}
+                    isPostingComment={isPostingComment}
+                  />
                 </>
               )}
-              <Comments
-                comment={comment}
-                setComment={setComment}
-                addComment={addComment}
-                comments={post.comments}
-                isPostingComment={isPostingComment}
-              />
             </div>
           </div>
         </div>

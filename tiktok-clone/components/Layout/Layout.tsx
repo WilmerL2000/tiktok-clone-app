@@ -1,4 +1,5 @@
 import { Sidebar, Navbar } from '..';
+import { ToastContainer } from 'react-toastify';
 
 type LayoutProps = {
   children: JSX.Element;
@@ -16,6 +17,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           {children}
         </div>
       </div>
+      <ToastContainer autoClose={2500} hideProgressBar={true} />
     </div>
   );
 };

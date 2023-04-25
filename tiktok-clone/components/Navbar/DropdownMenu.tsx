@@ -20,26 +20,29 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   userId,
 }) => {
   return (
-    <div className="z-20 absolute w-40 mt-2 right-0 rounded-md bg-gray-500 divide-y">
+    <div className="z-20 absolute w-40 mt-2 right-0 rounded-md bg-gray-200 divide-y">
       <div className=" px-2 py-3">
-        <span className="block text-sm text-gray-900 dark:text-white">
-          {userName}
-        </span>
+        <span className="block text-sm text-gray-900 ">{userName}</span>
       </div>
       <ul className="py-2 ">
         <li>
           <Link
             href={`/profile/${userId}`}
-            className="flex gap-2 px-4 py-2 text-sm text-grLinky-700 hover:bg-grLinky-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+            className="flex gap-2 px-4 py-2 text-sm text-grLinky-700 hover:bg-grLinky-100 
+            dark:hover:bg-gray-300  "
+            onClick={() => {
+              setIsOpen((prev: boolean) => !prev);
+            }}
           >
-            <CgProfile color="white" fontSize={21} />
+            <CgProfile className="hover:text-white" fontSize={21} />
             Profile
           </Link>
         </li>
         <li>
           <button
             type="button"
-            className="flex gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+            className="flex gap-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 
+            dark:hover:bg-gray-300  "
             onClick={() => {
               googleLogout();
               removeUser();
@@ -47,7 +50,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
               setIsOpen((prev: boolean) => !prev);
             }}
           >
-            <FiLogOut color="red" fontSize={21} />
+            <FiLogOut className="hover:text-white" fontSize={21} />
             Sign out
           </button>
         </li>

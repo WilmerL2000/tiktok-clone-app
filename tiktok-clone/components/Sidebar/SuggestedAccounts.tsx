@@ -15,16 +15,14 @@ const SuggestedAccounts: React.FC<SuggestedAccountsProps> = () => {
   );
   useEffect(() => {
     fetchAllUsers();
-    if (allUsers) {
-      setusersExist(true);
-    }
-  }, [fetchAllUsers]);
+    if (allUsers) setusersExist(true);
+  }, [fetchAllUsers, allUsers]);
 
   return (
     <div className="xl:border-b-2 border-gray-200 pb-4">
-      <p className="text-gray-500 font-semibold m-3 mt-4 hidden xl:block">
+      <div className="text-gray-500 font-semibold m-3 mt-4 hidden xl:block">
         Suggested accounts
-      </p>
+      </div>
       <div>
         {usersExist &&
           filteredUsers?.slice(0, 6).map((user: IUser) => (
@@ -40,10 +38,10 @@ const SuggestedAccounts: React.FC<SuggestedAccountsProps> = () => {
                   />
                 </div>
                 <div className="hidden xl:block">
-                  <p className="flex gap-1 items-center text-md font-bold text-primary lowercase">
-                    {user.userName.replace(/\s+/g, '')}{' '}
+                  <div className="flex gap-1 items-center text-md font-bold text-primary lowercase">
+                    <p>{user.userName.replace(/\s+/g, '')} </p>
                     <GoVerified className="text-blue-400" />
-                  </p>
+                  </div>
                   <p className="capitalize text-gray-400 text-xs">
                     {user.userName}
                   </p>

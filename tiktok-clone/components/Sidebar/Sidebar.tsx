@@ -1,16 +1,20 @@
+import useAuthStore from '@/store/authStore';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiFillHome, AiOutlineMenu } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
 import { Discover, Footer, SuggestedAccounts } from '..';
-import useAuthStore from '@/store/authStore';
 
 const Sidebar: React.FC = () => {
   const [showSidebar, setShowSidebar] = useState<Boolean>(true);
   const { pathname } = useRouter();
+  const [userExist, setUserExist] = useState<boolean>(false);
 
   const { userProfile }: any = useAuthStore();
+  useEffect(() => {
+    if (userProfile) setUserExist(true);
+  }, [userProfile]);
 
   const activeLink =
     'flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold text-[#F51997] rounded';
@@ -40,9 +44,11 @@ const Sidebar: React.FC = () => {
               </div>
             </Link>
           </div>
-          <Discover />
-          {userProfile && <SuggestedAccounts />}
-          <Footer />
+          <div>
+            <Discover />
+            {userExist && <SuggestedAccounts />}
+            <Footer />
+          </div>
         </div>
       )}
     </div>

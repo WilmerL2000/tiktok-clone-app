@@ -4,14 +4,12 @@ import { MdFavorite } from 'react-icons/md';
 
 type LikeButtonProps = {
   likes: any;
-  flex: string;
   handleLike: () => void;
   handleDislike: () => void;
 };
 
 const LikeButton: React.FC<LikeButtonProps> = ({
   likes,
-  flex,
   handleLike,
   handleDislike,
 }) => {

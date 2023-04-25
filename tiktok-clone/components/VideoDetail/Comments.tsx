@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { GoVerified } from 'react-icons/go';
@@ -24,17 +24,29 @@ const Comments: React.FC<CommentsProps> = ({
   isPostingComment,
 }) => {
   const { allUsers, userProfile }: any = useAuthStore();
+  const [userExist, setUserExist] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (userProfile) setUserExist(true);
+  }, [userProfile]);
 
   return (
-    <div className="border-t-2 border-gray-200 pt-4 px-10 mt-4 bg-[#F8F8F8] border-b-2 lg:pb-0 pb-[100px]">
-      <div className="overflow-scroll lg:h-[457px]">
+    <div className="border-t-2 border-gray-200 pt-4 px-10 mt-4 bg-[#F8F8F8] border-b-2 ">
+      <div
+        className={`overflow-y-scroll ${
+          comments?.length > 0 ? 'h-[500px]' : 'h-[300px]'
+        } `}
+      >
         {comments?.length > 0 ? (
           comments?.map((item: IComment, idx: number) => (
-            <>
+            <div key={idx}>
               {allUsers?.map(
                 (user: IUser) =>
                   user._id === (item.postedBy._ref || item.postedBy._id) && (
-                    <div className=" p-2 items-center" key={idx}>
+                    <div
+                      className=" p-2 items-center border-b-2 border-gray-200"
+                      key={idx}
+                    >
                       <Link href={`/profile/${user._id}`}>
                         <div className="flex items-start gap-3">
                           <div className="w-12 h-12">
@@ -47,28 +59,28 @@ const Comments: React.FC<CommentsProps> = ({
                             />
                           </div>
 
-                          <p className="flex cursor-pointer gap-1 items-center text-[18px] font-bold leading-6 text-primary">
-                            {user.userName}{' '}
+                          <div className="flex cursor-pointer gap-1 items-center text-[18px] font-bold leading-6 text-primary">
+                            <p>{user.userName} </p>
                             <GoVerified className="text-blue-400" />
-                          </p>
+                          </div>
                         </div>
                       </Link>
                       <div>
-                        <p className="-mt-5 ml-16 text-[16px] mr-8">
+                        <p className="-mt-5 ml-16 text-sm md:text-[16px] mr-8">
                           {item.comment}
                         </p>
                       </div>
                     </div>
                   )
               )}
-            </>
+            </div>
           ))
         ) : (
           <NoResults text="No Comments Yet!" type="comments" />
         )}
       </div>
-      {userProfile && (
-        <div className="absolute bottom-0 left-0 pb-6 px-2 md:px-10 ">
+      {userExist && (
+        <div className=" p-2 md:px-10 ">
           <form onSubmit={addComment} className="flex gap-4">
             <input
               value={comment}

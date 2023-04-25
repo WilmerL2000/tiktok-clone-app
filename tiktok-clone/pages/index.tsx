@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Video } from '@/types';
 import { NoResults, VideoCard } from '@/components';
 import { BASE_URL } from '@/utils';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface HomeProps {
   videos: Video[];

@@ -8,7 +8,7 @@ export default async function handler(
 ) {
     if (req.method === 'GET') {
 
-        const { searchTerm } = req.query
+        const { searchTerm }: any = req.query
 
         const data = await client.fetch(searchPostsQuery(searchTerm));
 

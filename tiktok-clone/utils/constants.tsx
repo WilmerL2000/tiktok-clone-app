@@ -46,7 +46,7 @@ export const footerList1 = [
   'Creator Directory',
 ];
 export const footerList2 = [
-  'TikTik for Good',
+  'TikTok for Good',
   'Advertise',
   'Developers',
   'Transparency',

@@ -25,7 +25,7 @@ export default async function handler(
         /* is creating a new document in the connected database using the data
         passed in the `doc` variable. Then send a success message */
         client.create(doc).then(() => {
-            res.status(200).json('Video created');
+            res.status(200).json('Video created!');
         });
     }
 }

@@ -1,94 +1,91 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { NextPage } from 'next';
-import Image from 'next/image';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import Link from 'next/link';
 import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
 import { BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs';
 import { GoVerified } from 'react-icons/go';
+import { FaRegCommentDots } from 'react-icons/fa';
 import { BsPlay } from 'react-icons/bs';
 
 import { Video } from '@/types';
 import UserBanner from './User/UserBanner';
+import { useRouter } from 'next/router';
+import { useVideo } from '@/hooks/useVideo';
 
 type VideoCardProps = {
   post: Video;
-  isShowingOnHome?: boolean;
 };
 
 const VideoCard: React.FC<VideoCardProps> = ({
   post: { caption, postedBy, video, _id, likes },
-  isShowingOnHome,
 }) => {
-  const [playing, setPlaying] = useState(false);
-  const [isHover, setIsHover] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  /**
-   * The function toggles the playing state of a video element.
-   */
-  const onVideoPress = () => {
-    if (playing) {
-      videoRef?.current?.pause();
-      setPlaying(false);
-    } else {
-      videoRef?.current?.play();
-      setPlaying(true);
-    }
-  };
+  const { pathname } = useRouter();
 
-  /* Update the `muted` property of the video element based. Whenever the `isVideoMuted` state changes, 
-  this useEffect hook will be triggered and it will check if the `videoRef.current` exists. 
-  This allows the user to mute or unmute the video by clicking on the volume button. */
+  const { onVideoPress, isPlaying, playVideo, resetVideo } = useVideo(videoRef);
+
+  /* This `useEffect` hook is responsible for muting or unmuting the video and playing it based on
+certain conditions. It runs whenever `isVideoMuted` or `pathname` changes. */
   useEffect(() => {
     if (videoRef?.current) {
-      videoRef.current.muted = isVideoMuted;
+      if (pathname.includes('/profile') && window.innerWidth <= 700) {
+        videoRef.current.muted = true;
+        videoRef.current.play();
+      } else {
+        videoRef.current.muted = isVideoMuted;
+      }
     }
-  }, [isVideoMuted]);
+  }, [isVideoMuted, pathname]);
 
   return (
     <div className="flex flex-col border-b-2 border-gray-200 pb-6">
-      <div className="flex items-start">
+      <div
+        className={`flex ${pathname.includes('/profile') ? 'hidden' : 'none'}`}
+      >
         <UserBanner
           userId={postedBy._id}
           image={postedBy.image}
           userName={postedBy.userName}
         />
       </div>
-      <div className="lg:ml-20 flex gap-4 relative">
-        <div
-          className="rounded-3xl"
-          onMouseEnter={() => setIsHover(true)}
-          onMouseLeave={() => setIsHover(false)}
-        >
+      <div className="mx-auto lg:ml-20 flex ">
+        <div className="rounded-3xl flex">
           <Link href={`/detail/${_id}`}>
             <video
               loop
               ref={videoRef}
               src={video.asset.url}
-              className="md:w-[600px] h-[300px] md:h-[400px] lg:h-[530px] w-[200px] rounded-2xl cursor-pointer bg-gray-100"
+              className="md:w-[300px] h-[300px] md:h-[400px] lg:h-[530px] w-[200px] rounded-2xl cursor-pointer "
+              {...(pathname.includes('/profile') && {
+                onMouseOver: playVideo,
+                onMouseLeave: resetVideo,
+              })}
             ></video>
           </Link>
-          {isHover && (
-            <div className="absolute bottom-6 cursor-pointer left-8 md:left-14 lg:left-0 flex gap-10 justify-between w-[100px] md:w-[50px] lg:w-[600px] p-3">
-              {playing ? (
+          {!pathname.includes('/profile') && (
+            <div className=" bottom-0 cursor-pointer flex justify-center flex-col gap-10 p-3 text-2xl lg:text-3xl">
+              {isPlaying ? (
                 <button onClick={onVideoPress}>
-                  <BsFillPauseFill className="text-white sm:text-black text-2xl lg:text-4xl" />
+                  <BsFillPauseFill className="text-black  " />
                 </button>
               ) : (
                 <button onClick={onVideoPress}>
-                  <BsFillPlayFill className="text-white sm:text-black text-2xl lg:text-4xl" />
+                  <BsFillPlayFill className="text-black  " />
                 </button>
               )}
               {isVideoMuted ? (
                 <button onClick={() => setIsVideoMuted(false)}>
-                  <HiVolumeOff className="text-white sm:text-black text-2xl lg:text-4xl" />
+                  <HiVolumeOff className="text-black  " />
                 </button>
               ) : (
                 <button onClick={() => setIsVideoMuted(true)}>
-                  <HiVolumeUp className="text-white sm:text-black text-2xl lg:text-4xl" />
+                  <HiVolumeUp className="text-black  " />
                 </button>
               )}
+              <Link href={`/detail/${_id}`}>
+                <FaRegCommentDots className="text-black  " />
+              </Link>
             </div>
           )}
         </div>
