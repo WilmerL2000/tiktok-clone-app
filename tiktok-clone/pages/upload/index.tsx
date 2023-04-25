@@ -11,6 +11,7 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { BsCloudUploadFill } from 'react-icons/bs';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { MdAddToPhotos } from 'react-icons/md';
+import { BiUpload } from 'react-icons/bi';
 import { toast } from 'react-toastify';
 
 const Upload = () => {
@@ -248,7 +249,7 @@ const Upload = () => {
               {savingPost ? (
                 <div className="flex gap-2 md:gap-4 justify-center">
                   <p>Posting...</p>
-                  <MdAddToPhotos className="text-white text-2xl" />
+                  <BiUpload className="text-white text-2xl animate__animated animate__fadeIn animate__infinite" />
                 </div>
               ) : (
                 <div className="flex gap-2 md:gap-4 justify-center">
