@@ -32,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = () => {
             height={500}
             priority
           />
-          <span className="font-extrabold text-transparent text-xl md:text-2xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+          <span className="font-extrabold text-transparent md:text-2xl hidden md:block bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
             TikTok
           </span>
         </div>
@@ -40,7 +40,7 @@ const Navbar: React.FC<NavbarProps> = () => {
       <div className="flex gap-3 items-center">
         <Link
           href="/search"
-          className="border-2 text-2xl text-black mr-3 hover:bg-gray-300 p-2 px-4 rounded-md"
+          className="border-2 text-xl text-black mr-3 hover:bg-gray-300 p-2 px-4 rounded-md"
         >
           <BiSearch />
         </Link>
@@ -87,6 +87,7 @@ const Navbar: React.FC<NavbarProps> = () => {
               createOrGetUser(resp, addUser);
             }}
             text="signin"
+            size="medium"
             onError={() => console.log('Login Failed')}
           />
         )}
