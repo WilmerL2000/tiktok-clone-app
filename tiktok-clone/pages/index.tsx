@@ -1,8 +1,8 @@
-import Head from 'next/head';
-import axios from 'axios';
-import { Video } from '@/types';
 import { NoResults, VideoCard } from '@/components';
+import { Video } from '@/types';
 import { BASE_URL } from '@/utils';
+import axios from 'axios';
+import Head from 'next/head';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface HomeProps {
