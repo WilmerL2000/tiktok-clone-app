@@ -1,16 +1,10 @@
-import axios from 'axios';
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { GoVerified } from 'react-icons/go';
-import Link from 'next/link';
-
-import { VideoCard, NoResults, UserBanner } from '@/components';
-
-import { BASE_URL } from '@/utils';
+import { NoResults, SearchLayout, UserBanner, VideoCard } from '@/components';
 import useAuthStore from '@/store/authStore';
 import { IUser, Video } from '@/types';
-import { SearchLayout } from '@/components';
+import { BASE_URL } from '@/utils';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 
 type SearchProps = {
   videos: Video[];
@@ -28,11 +22,11 @@ const Search: React.FC<SearchProps> = ({ videos }) => {
   const isVideos = !isAccounts ? 'border-b-2 border-black' : 'text-gray-400';
   const searchedAccounts = !userProfile
     ? allUsers?.filter((user: IUser) =>
-        user.userName.toLowerCase().includes(searchTerm)
+        user.userName.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : allUsers?.filter(
         (user: IUser) =>
-          user.userName.toLowerCase().includes(searchTerm) &&
+          user.userName.toLowerCase().includes(searchTerm.toLowerCase()) &&
           user._id !== userProfile._id
       );
 
@@ -70,7 +64,7 @@ const Search: React.FC<SearchProps> = ({ videos }) => {
               ))
             ) : (
               <NoResults
-                text={`No account results for ${searchTerm}`}
+                text={`No account results for "${searchTerm}"`}
                 type="account"
               />
             )}

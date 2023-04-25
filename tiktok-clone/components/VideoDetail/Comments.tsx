@@ -31,7 +31,7 @@ const Comments: React.FC<CommentsProps> = ({
   }, [userProfile]);
 
   return (
-    <div className="border-t-2 border-gray-200 pt-4 px-10 mt-4 bg-[#F8F8F8] border-b-2 ">
+    <div className="border-t-2 border-gray-200 px-10 mt-4 py-2 bg-[#F8F8F8] border-b-2 ">
       <div
         className={`overflow-y-scroll ${
           comments?.length > 0 ? 'h-[500px]' : 'h-[300px]'
@@ -59,14 +59,14 @@ const Comments: React.FC<CommentsProps> = ({
                             />
                           </div>
 
-                          <div className="flex cursor-pointer gap-1 items-center text-[18px] font-bold leading-6 text-primary">
+                          <div className="flex cursor-pointer gap-1 items-center text-sm md:text-[18px] font-bold leading-6 text-primary">
                             <p>{user.userName} </p>
                             <GoVerified className="text-blue-400" />
                           </div>
                         </div>
                       </Link>
                       <div>
-                        <p className="-mt-5 ml-16 text-sm md:text-[16px] mr-8">
+                        <p className="-mt-5 ml-16 text-xs md:text-[16px] mr-8">
                           {item.comment}
                         </p>
                       </div>

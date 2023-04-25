@@ -30,6 +30,7 @@ const Navbar: React.FC<NavbarProps> = () => {
             alt="logo"
             width={500}
             height={500}
+            priority
           />
           <span className="font-extrabold text-transparent text-xl md:text-2xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
             TikTok

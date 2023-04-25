@@ -10,6 +10,7 @@ export default async function handler(
 
         const { searchTerm }: any = req.query
 
+        /* Is fetching data from the server using the `searchPostsQuery` function with the `searchTerm` parameter.*/
         const data = await client.fetch(searchPostsQuery(searchTerm));
 
         res.status(200).json(data)

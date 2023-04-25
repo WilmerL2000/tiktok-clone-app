@@ -8,14 +8,11 @@ export default async function handler(
     res: NextApiResponse
 ) {
     if (req.method === 'GET') {
-        /* This function returns a GraphQL query string that retrieves all posts 
-        from the connected database. The `query` constant is then used to fetch
-        the data from the database using the `client.fetch` method. */
-        const query = allPostsQuery();
 
-        //Fetching data
-        const data = await client.fetch(query);
-        //Response
+
+        /* Is fetching data from the connected database using the `allPostsQuery` query.*/
+        const data = await client.fetch(allPostsQuery());
+
         res.status(200).json(data);
 
     } else if (req.method === 'POST') {

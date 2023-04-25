@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { FiLogOut } from 'react-icons/fi';
+import 'animate.css';
 
 type DropdownMenuProps = {
   userName?: string;
@@ -20,7 +21,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   userId,
 }) => {
   return (
-    <div className="z-20 absolute w-40 mt-2 right-0 rounded-md bg-gray-200 divide-y">
+    <div className="z-20 absolute w-40 mt-2 right-0 rounded-md bg-gray-200 divide-y animate__animated animate__fadeIn animate__fast">
       <div className=" px-2 py-3">
         <span className="block text-sm text-gray-900 ">{userName}</span>
       </div>

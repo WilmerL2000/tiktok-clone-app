@@ -1,21 +1,21 @@
-import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
-import { BsFillPlayFill } from 'react-icons/bs';
-import { HiVolumeOff, HiVolumeUp } from 'react-icons/hi';
-import { MdOutlineCancel } from 'react-icons/md';
 import { Comments, LikeButton, UserBanner } from '@/components';
 import { useVideo } from '@/hooks/useVideo';
 import useAuthStore from '@/store/authStore';
 import { Video } from '@/types';
 import { BASE_URL } from '@/utils';
 import axios from 'axios';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+import { BsFillPlayFill } from 'react-icons/bs';
+import { HiVolumeOff, HiVolumeUp } from 'react-icons/hi';
+import { MdOutlineCancel } from 'react-icons/md';
 
 type Props = {
   postDetails: Video;
 };
 
 const Detail = ({ postDetails }: Props) => {
-  const [post, setPost] = useState(postDetails[0]);
+  const [post, setPost] = useState();
   const [isVideoMuted, setIsVideoMuted] = useState<boolean>(false);
   const [isPostingComment, setIsPostingComment] = useState<boolean>(false);
   const [comment, setComment] = useState<string>('');
@@ -29,11 +29,9 @@ const Detail = ({ postDetails }: Props) => {
 
   useEffect(() => {
     if (userProfile) setUserExist(true);
-  }, [userProfile]);
+    if (postDetails) setPost(postDetails[0]);
+  }, [userProfile, postDetails]);
 
-  /* Is setting the `muted` property of the `videoRef` element to the value of
-`isVideoMuted` when either `post` or `isVideoMuted` changes. This allows the user to mute or unmute
-the video by clicking on the volume button. */
   useEffect(() => {
     if (post && videoRef?.current) {
       videoRef.current.muted = isVideoMuted;
@@ -125,34 +123,36 @@ the video by clicking on the volume button. */
           <div className="relative w-[1000px] md:w-[900px] lg:w-[700px] flex flex-col">
             <div className="lg:mt-20 mt-10 h-full">
               <UserBanner
-                userId={post.postedBy._id}
-                image={post.postedBy.image}
-                userName={post.postedBy.userName}
+                userId={post?.postedBy?._id}
+                image={post?.postedBy?.image}
+                userName={post?.postedBy?.userName}
               />
               <div className="px-10">
-                <p className=" text-md text-gray-600">{post.caption}</p>
+                <p className=" text-md text-gray-600">{post?.caption}</p>
               </div>
               {userExist && (
                 <>
                   <div className="mt-10 px-10">
                     <div>
                       <LikeButton
-                        likes={post.likes}
+                        likes={post?.likes}
                         handleLike={() => handleLike(true)}
                         handleDislike={() => handleLike(false)}
                       />
                     </div>
                   </div>
-                  <Comments
-                    comment={comment}
-                    setComment={setComment}
-                    addComment={addComment}
-                    comments={post.comments}
-                    isPostingComment={isPostingComment}
-                  />
                 </>
               )}
             </div>
+            <>
+              <Comments
+                comment={comment}
+                setComment={setComment}
+                addComment={addComment}
+                comments={post?.comments}
+                isPostingComment={isPostingComment}
+              />
+            </>
           </div>
         </div>
       )}

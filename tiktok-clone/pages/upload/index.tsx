@@ -1,13 +1,16 @@
 import useAuthStore from '@/store/authStore';
+import { BASE_URL } from '@/utils';
 import { client } from '@/utils/client';
+import { topics } from '@/utils/constants';
+import { SanityAssetDocument } from '@sanity/client';
+import 'animate.css';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { BsCloudUploadFill } from 'react-icons/bs';
 import { FaCloudUploadAlt } from 'react-icons/fa';
-import { MdDelete } from 'react-icons/md';
-import { SanityAssetDocument } from '@sanity/client';
-import { topics } from '@/utils/constants';
-import { BASE_URL } from '@/utils';
+import { MdAddToPhotos } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
 const Upload = () => {
@@ -21,40 +24,56 @@ const Upload = () => {
   const [wrongFileType, setWrongFileType] = useState(false);
   const userProfile: any = useAuthStore((state) => state.userProfile);
   const router = useRouter();
+  const fileTypes = ['video/mp4', 'video/webm', 'video/ogg'];
 
   useEffect(() => {
     if (!userProfile) router.push('/');
   }, [userProfile, router]);
 
   /**
-   * This function uploads a video file to a client's assets and checks if the file type is valid.
+   * This function checks if the selected file is of a valid type and uploads it if it is.
    * @param {any} e - The parameter "e" is an event object that is passed to the function when it is
-   * called. It is typically used to access information about the event that triggered the function,
-   * such as the target element or the type of event. In this case, it is used to access the selected
-   * file from the
+   * triggered by an event, such as a user selecting a files.
    */
-  const uploadVideo = async (e: any) => {
+  const checkingVideo = async (e: any) => {
     const selectedFile = e.target.files[0];
-    const fileTypes = ['video/mp4', 'video/webm', 'video/ogg'];
+
     if (fileTypes.includes(selectedFile.type)) {
-      client.assets
-        .upload('file', selectedFile, {
-          contentType: selectedFile.type,
-          filename: selectedFile.name,
-        })
-        .then((data) => {
-          setVideoAsset(data);
-          setIsLoading(false);
-        });
+      setWrongFileType(false);
+      setIsLoading(true);
+
+      uploadVideo(selectedFile);
     } else {
       setIsLoading(false);
       setWrongFileType(true);
+      setTimeout(() => {
+        setWrongFileType(false);
+      }, 3000);
     }
   };
 
   /**
-   * This function creates a document object representing a post and saves it to a database using
-   * axios.post.
+   * This function uploads a selected video file to a client's assets and sets the video asset data while
+   * also setting the loading state to false.
+   * @param {any} selectedFile - The selectedFile parameter is an object that represents the video file
+   * that the user has selected to upload. It contains information such as the file type, name, and
+   * content.
+   */
+  const uploadVideo = (selectedFile: any) => {
+    client.assets
+      .upload('file', selectedFile, {
+        contentType: selectedFile.type,
+        filename: selectedFile.name,
+      })
+      .then((data) => {
+        setVideoAsset(data);
+        setIsLoading(false);
+      });
+  };
+
+  /**
+   * This function handles the creation of a new post by sending a POST request to a server with the
+   * post data.
    */
   const handlePost = async () => {
     if (caption && videoAsset?._id && topic) {
@@ -110,7 +129,12 @@ const Upload = () => {
           hover:bg-gray-100"
           >
             {isLoading ? (
-              <p>Uploading...</p>
+              <div className="flex flex-col items-center">
+                <div className="animate__animated animate__fadeIn animate__infinite font-bold text-xl">
+                  <BsCloudUploadFill className="text-gray-300 text-6xl" />
+                </div>
+                <p className="text-xl font-semibold">Uploading...</p>
+              </div>
             ) : (
               <div>
                 {videoAsset ? (
@@ -138,8 +162,8 @@ const Upload = () => {
                         Less than 2GB
                       </p>
                       <p
-                        className="bg-[#F51997] text-center mt-10 rounded text-white 
-                      text-md font-medium p-2 w-52 outline-none"
+                        className="bg-[#F51997] text-center mt-10 text-white 
+                      text-md font-medium p-2 w-52 outline-none rounded-md"
                       >
                         Select File
                       </p>
@@ -147,7 +171,7 @@ const Upload = () => {
                     <input
                       type="file"
                       name="upload-video"
-                      onChange={uploadVideo}
+                      onChange={checkingVideo}
                       className="w-0 h-0"
                     />
                   </label>
@@ -155,7 +179,20 @@ const Upload = () => {
               </div>
             )}
             {wrongFileType && (
-              <p className="text-center text-xl text-red-400 font-semibold mt-4 w-[250px]">
+              <p className="text-center text-lg text-red-400 font-semibold mt-4 w-[250px] flex items-center">
+                <svg
+                  aria-hidden="true"
+                  className="flex-shrink-0 inline w-5 h-5 mr-3"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
                 Please select a video file
               </p>
             )}
@@ -193,17 +230,32 @@ const Upload = () => {
             <button
               onClick={handleDiscard}
               type="button"
-              className="border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
+              className="border-gray-300 border-2 text-md font-medium p-2 rounded w-28 lg:w-44 outline-none hover:bg-gray-300"
             >
-              Discard
+              <div className="flex gap-2 md:gap-4 justify-center">
+                <p>Discard</p>
+                <AiOutlineDelete className="text-black text-2xl" />
+              </div>
             </button>
             <button
               disabled={videoAsset?.url ? false : true}
               onClick={handlePost}
               type="button"
-              className="bg-[#F51997] text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none"
+              className="bg-[#F51997] text-white text-md font-medium p-2 rounded w-28 lg:w-44 outline-none
+              hover:bg-[#e30583]
+              "
             >
-              {savingPost ? 'Posting...' : 'Post'}
+              {savingPost ? (
+                <div className="flex gap-2 md:gap-4 justify-center">
+                  <p>Posting...</p>
+                  <MdAddToPhotos className="text-white text-2xl" />
+                </div>
+              ) : (
+                <div className="flex gap-2 md:gap-4 justify-center">
+                  <p>Upload</p>
+                  <MdAddToPhotos className="text-white text-2xl" />
+                </div>
+              )}
             </button>
           </div>
         </div>

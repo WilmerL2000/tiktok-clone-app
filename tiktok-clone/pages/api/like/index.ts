@@ -12,8 +12,7 @@ export default async function handler(
         database. Specifically, it is updating a document with the ID `postId`
         and adding a new like to its `likes` array.
         ---------------------------------------------------------------------------
-        To update a document in a Sanity.io database.
-        Specifically, it is removing a like from a document with the ID `postId` by unsetting
+        It is removing a like from a document with the ID `postId` by unsetting
         the `likes` array element that has a `_ref` property equal to the `userId`. The `unset`
         method is used to remove the specified element from the array, and the `commit` method
         is used to commit the changes to the database.

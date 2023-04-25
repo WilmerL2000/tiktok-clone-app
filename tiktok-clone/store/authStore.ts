@@ -3,13 +3,12 @@ import axios from 'axios'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-
 /**
- * This is a TypeScript function that creates an authentication store with a method to add a user
- * profile.
+ * This is a TypeScript function that creates an authentication store with methods to add, remove, and
+ * fetch users.
  * @param {any} set - The `set` parameter is a function that is used to update the state of the store.
- * It takes an object as an argument and merges it with the current state of the store. The `set`
- * function is provided by the `create` function of the `zustand` library, which
+ * It takes an object as an argument, which contains the new values for the state properties that need
+ * to be updated. When `set` is called, it merges the new values with the existing state and triggers
  */
 const authStore = (set: any) => ({
     userProfile: null,

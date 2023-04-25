@@ -1,26 +1,22 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
-import Link from 'next/link';
-import { HiVolumeUp, HiVolumeOff } from 'react-icons/hi';
-import { BsFillPlayFill, BsFillPauseFill } from 'react-icons/bs';
-import { GoVerified } from 'react-icons/go';
-import { FaRegCommentDots } from 'react-icons/fa';
-import { BsPlay } from 'react-icons/bs';
-
-import { Video } from '@/types';
-import UserBanner from './User/UserBanner';
-import { useRouter } from 'next/router';
 import { useVideo } from '@/hooks/useVideo';
+import { Video } from '@/types';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
+import { BsFillPauseFill, BsFillPlayFill } from 'react-icons/bs';
+import { FaRegCommentDots } from 'react-icons/fa';
+import { HiVolumeOff, HiVolumeUp } from 'react-icons/hi';
+import UserBanner from './User/UserBanner';
 
 type VideoCardProps = {
   post: Video;
 };
 
 const VideoCard: React.FC<VideoCardProps> = ({
-  post: { caption, postedBy, video, _id, likes },
+  post: { postedBy, video, _id },
 }) => {
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-
   const { pathname } = useRouter();
 
   const { onVideoPress, isPlaying, playVideo, resetVideo } = useVideo(videoRef);

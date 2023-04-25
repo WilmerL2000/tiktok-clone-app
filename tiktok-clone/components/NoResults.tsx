@@ -1,8 +1,8 @@
 import React from 'react';
-import { MdOutlineVideocamOff } from 'react-icons/md';
 import { BiCommentX } from 'react-icons/bi';
-import { FcSearch } from 'react-icons/fc';
 import { FaUserAltSlash } from 'react-icons/fa';
+import { FcSearch } from 'react-icons/fc';
+import { MdOutlineVideocamOff } from 'react-icons/md';
 
 type NoResultsProps = {
   text: string;

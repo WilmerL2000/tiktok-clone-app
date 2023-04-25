@@ -9,10 +9,10 @@ export default async function handler(
     if (req.method === 'GET') {
         const { topic }: any = req.query;
 
-        /* Creates a new user in a database if the user does not already exist.*/
+        /* Is fetching data from a GraphQL API using the `client` object and the `topicPostsQuery` query. 
+        The `topic` variable is passed as an argument to the query to retrieve data related to a specific topic. */
         const videos = await client.fetch(topicPostsQuery(topic));
 
         res.status(200).json(videos);
-
     }
 }

@@ -12,7 +12,7 @@ export default async function handler(
         if (data) {
             res.status(200).json(data)
         } else {
-            res.json([])
+            res.status(204).json([])
         }
 
     }
