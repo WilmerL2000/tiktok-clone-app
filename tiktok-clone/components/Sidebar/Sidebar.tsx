@@ -12,6 +12,7 @@ const Sidebar: React.FC = () => {
   const [userExist, setUserExist] = useState<boolean>(false);
 
   const { userProfile }: any = useAuthStore();
+
   useEffect(() => {
     if (userProfile) setUserExist(true);
   }, [userProfile]);
