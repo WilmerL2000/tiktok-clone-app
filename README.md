@@ -5,7 +5,7 @@
   <h1 align="center">TikTok Clone</h1>
     <img src="https://res.cloudinary.com/wils09/image/upload/v1682490857/GitHub/tiktok-clone/main_g7jm4z.png" width="100%" >
   <p align="center">
-    <a href="https://tiktok-clone-app-w.vercel.app/">Web Page</a>
+    <a href="https://tiktok-clone-app-w.vercel.app/" target="_blank">Web Page</a>
   </p>
 </div>
 
