@@ -148,7 +148,7 @@ As its name says, this project is a clone of TikTok, which has some of the most 
   </div>
 </div>
 
-### 📱Mobile
+### Mobile
 
 <div align="center">
   <div>
