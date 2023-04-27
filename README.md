@@ -139,7 +139,7 @@ As its name says, this project is a clone of TikTok, which has some of the most 
     <img src="https://res.cloudinary.com/wils09/image/upload/v1682492959/GitHub/tiktok-clone/detail_ks5viu.png" width="100%" >
   </div>
   <div>
-    <h3>Post Video</h3>
+    <h3>Upload & Post Video</h3>
     <img src="https://res.cloudinary.com/wils09/image/upload/v1682492958/GitHub/tiktok-clone/upload_ojaces.png" width="100%" >
   </div>
   <div>
