@@ -177,11 +177,15 @@ _Follow the instructions below_
    ```sh
    npm install
    ```
-3. Enter your API KEYS in `.env` file
+3. Enter your Sanity API KEY in `.env` file
    ```js
-   const API_KEY = 'ENTER YOUR API';
+   API_KEY = 'ENTER YOUR API';
    ```
-4. Start project
+4. Enter your Google API KEY in `.env` file
+   ```js
+   API_KEY = 'ENTER YOUR API';
+   ```
+5. Start project for both
    ```sh
    npm run dev
    ```
