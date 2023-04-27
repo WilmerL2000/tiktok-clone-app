@@ -65,31 +65,31 @@ As its name says, this project is a clone of TikTok, which has some of the most 
         <br><strong>Tech</strong>
       </td>      
       <td align="center" width="96">
-          <img src="https://res.cloudinary.com/wils09/image/upload/v1682487162/GitHub/assets/image_20211214122557_0_h9qr5m.png" width="48" height="48" alt="C#" />
+          <img src="https://res.cloudinary.com/wils09/image/upload/v1682487162/GitHub/assets/image_20211214122557_0_h9qr5m.png" width="48" height="48" alt="Next.js" />
         <br><strong>Next.js</strong>        
       </td>      
       <td align="center" width="96">
-          <img src="https://res.cloudinary.com/wils09/image/upload/v1682487163/GitHub/assets/react_original_logo_icon_146374_whazfv.png" width="48" height="48" alt="C#" />
+          <img src="https://res.cloudinary.com/wils09/image/upload/v1682487163/GitHub/assets/react_original_logo_icon_146374_whazfv.png" width="48" height="48" alt="React" />
         <br><strong>React</strong>        
       </td>      
       <td align="center" width="96">
-          <img src="https://res.cloudinary.com/wils09/image/upload/v1682487162/GitHub/assets/file_type_typescript_official_icon_130107_svjybp.png" width="48" height="48" alt="C#" />
+          <img src="https://res.cloudinary.com/wils09/image/upload/v1682487162/GitHub/assets/file_type_typescript_official_icon_130107_svjybp.png" width="48" height="48" alt="TypeScript" />
         <br><strong>TypeScript</strong>        
       </td>      
       <td align="center" width="96">
-          <img src="https://res.cloudinary.com/wils09/image/upload/v1682487162/GitHub/assets/file_type_tailwind_icon_130128_mwu7ie.png" width="48" height="48" alt="C#" />
+          <img src="https://res.cloudinary.com/wils09/image/upload/v1682487162/GitHub/assets/file_type_tailwind_icon_130128_mwu7ie.png" width="48" height="48" alt="Tailwind CSS" />
         <br><strong>Tailwind CSS</strong>        
       </td>      
       <td align="center" width="96">
-          <img src="https://res.cloudinary.com/wils09/image/upload/v1682537001/GitHub/assets/axios_hhohil.png" width="48" height="48" alt="C#" />
+          <img src="https://res.cloudinary.com/wils09/image/upload/v1682537001/GitHub/assets/axios_hhohil.png" width="48" height="48" alt="Axios" />
         <br><strong>Axios</strong>        
       </td>      
       <td align="center" width="96">
-          <img src="https://res.cloudinary.com/wils09/image/upload/v1682487163/GitHub/assets/sanity_je2by8.png" width="48" height="48" alt="C#" />
+          <img src="https://res.cloudinary.com/wils09/image/upload/v1682487163/GitHub/assets/sanity_je2by8.png" width="48" height="48" alt="Sanity" />
         <br><strong>Sanity</strong>        
       </td>      
       <td align="center" width="96">
-          <img src="https://res.cloudinary.com/wils09/image/upload/v1682489027/GitHub/assets/zustand_dyq4zd.png" width="64" height="48" alt="C#" />
+          <img src="https://res.cloudinary.com/wils09/image/upload/v1682489027/GitHub/assets/zustand_dyq4zd.png" width="64" height="48" alt="Zustand" />
         <br><strong>Zustand</strong>        
       </td>      
     </tr>
