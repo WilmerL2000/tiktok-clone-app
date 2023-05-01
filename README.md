@@ -54,7 +54,7 @@ As its name says, this project is a clone of TikTok, which has some of the most 
 - Filter videos on the main page by set topics.
 - Play, pause and mute each video.
 - Comment and like each video.
-- Go to each user's profile and upload the videos they have posted and liked.
+- Go to each user's profile and see the videos they have posted and liked.
 - Search for user accounts and videos related to the search term.
 
 ### Tech Stack
