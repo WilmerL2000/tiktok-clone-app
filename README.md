@@ -51,7 +51,7 @@ As its name says, this project is a clone of TikTok, which has some of the most 
 
 - Sign in with Google account.
 - Post a video if you are logged in.
-- Filter videos on the main page by set themes.
+- Filter videos on the main page by set topics.
 - Play, pause and mute each video.
 - Comment and like each video.
 - Go to each user's profile and upload the videos they have posted and liked.
